@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-class MagicNumberValidator
+class MagicNumberFinder
 
   constructor: (@number) ->
     @digits               = @number.toString(10).split('').map(Number)
@@ -91,17 +91,20 @@ class MagicNumberValidator
     return false if @digitsOdd.length is 0
     Math.sqrt(@digitsOddMultiplication) is Math.abs(Math.sqrt(@digitsOddMultiplication))
 
-exports.find = ->
+exports.create = (number) ->
+  new MagicNumberFinder number
 
-  # validator = new MagicNumberValidator(40048)
+exports.findSmaller = ->
+
+  # validator = new MagicNumberFinder 40048
   # if validator.isValid()
   #   console.log "The magic number is 40048!"
 
   for number in [0..10000]
-    validator = new MagicNumberValidator(number)
+    validator = new MagicNumberFinder number
 
     if validator.isValid()
       console.log "The magic number is #{number}!"
       return
 
-exports.find()
+#exports.findSmaller()

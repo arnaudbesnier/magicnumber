@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/arnaudbesnier/magicnumber.git"
   },
-   "main": "lib/magicnumber.js",
+   "main": "lib/magicNumberFinder.js",
   "dependencies": {
     "underscore": "^1.8.1"
   },
