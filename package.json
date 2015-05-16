@@ -1,0 +1,15 @@
+{
+  "author": "Arnaud Besnier <arnaudibesnier@gmail.com> (http://www.arnaudbesnier.com/)",
+  "name": "magicnumber",
+  "description": "Find a magic number",
+  "version": "0.0.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnaudbesnier/magicnumber.git"
+  },
+   "main": "lib/magicnumber.js",
+  "dependencies": {},
+  "devDependencies": {
+    "coffee-script": ">= 1.3"
+  }
+}
