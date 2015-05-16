@@ -8,7 +8,9 @@
     "url": "https://github.com/arnaudbesnier/magicnumber.git"
   },
    "main": "lib/magicnumber.js",
-  "dependencies": {},
+  "dependencies": {
+    "underscore": "^1.8.1"
+  },
   "devDependencies": {
     "coffee-script": ">= 1.3"
   }
