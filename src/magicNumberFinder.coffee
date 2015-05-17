@@ -3,16 +3,16 @@ _ = require 'underscore'
 class MagicNumberValidator
 
   properties: => [
-    @hasOneOfTheDigitsThatIsSumOfTheOthers
-    @isDecreasingSequence
-    @hasAtLeast2OddDigits
-    @areAllDigitsDifferent
-    @isThe4thDigitEven
-    @productOfAllDigitsIsNotMultipleOf5
-    @contains3OddDigitInARow
-    @isPrimeNumber
-    @hasAtLeast2EvenDigitsInARow
-    @isTheProductOfAllOddDigitsASquareNumber
+    @hasOneOfTheDigitsThatIsSumOfTheOthers   # Property 0
+    @isDecreasingSequence                    # Property 1
+    @hasAtLeast2OddDigits                    # Property 2
+    @areAllDigitsDifferent                   # Property 3
+    @isThe4thDigitEven                       # Property 4
+    @productOfAllDigitsIsNotMultipleOf5      # Property 5
+    @contains3OddDigitInARow                 # Property 6
+    @isPrimeNumber                           # Property 7
+    @hasAtLeast2EvenDigitsInARow             # Property 8
+    @isTheProductOfAllOddDigitsASquareNumber # Property 9
   ]
 
   constructor: (@number) ->
