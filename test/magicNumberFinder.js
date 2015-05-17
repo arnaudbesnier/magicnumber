@@ -90,7 +90,7 @@ exports.containsAtLeast2EvenDigitsInARow = function(test) {
 exports.isTheProductOfAllOddDigitsASquareNumber = function(test) {
     methodsValidator(test, {
         method:         'isTheProductOfAllOddDigitsASquareNumber',
-        numbersValid:   [1, 19, 29, 99, 999, 1255, 10000, 40049],
+        numbersValid:   [1, 19, 29, 99, 999, 1255, 1299, 10000, 40049],
         numbersInvalid: [0, 7, 15, 22, 777, 808, 40048]
     });
 };
