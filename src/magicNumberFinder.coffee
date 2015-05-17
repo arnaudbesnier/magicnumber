@@ -38,7 +38,7 @@ class MagicNumberValidator
   isDecreasingSequence: =>
     digitCurrent = 10
     for digit in @digits
-      if digitCurrent > digit
+      if digitCurrent >= digit
         digitCurrent = digit
       else
         return false
@@ -69,15 +69,17 @@ class MagicNumberValidator
   isPrimeNumber: =>
     return false if @number < 2
     for value in [2..@number]
-      return false if @number %% value is 0
+      return false if @number isnt value and @number %% value is 0
     true
 
   isTheProductOfAllOddDigitsASquareNumber: =>
-    return false if @digitsOdd.length is 0
-    Math.sqrt(@productDigitsOdd) is Math.abs(Math.sqrt(@productDigitsOdd))
+    if @digitsOdd.length > 0
+      squareValue = Math.sqrt @productDigitsOdd
+      squareValue is Math.ceil(squareValue)
+    else
+      false
 
-exports.create = (number) ->
-  new MagicNumberValidator number
+exports.create = (number) -> new MagicNumberValidator number
 
 exports.findSmaller = ->
   for number in [0..40048]
