@@ -2,19 +2,6 @@ _ = require 'underscore'
 
 class MagicNumberValidator
 
-  properties: => [
-    @hasOneOfTheDigitsThatIsSumOfTheOthers   # Property 0
-    @isDecreasingSequence                    # Property 1
-    @hasAtLeast2OddDigits                    # Property 2
-    @areAllDigitsDifferent                   # Property 3
-    @isThe4thDigitEven                       # Property 4
-    @productOfAllDigitsIsNotMultipleOf5      # Property 5
-    @contains3OddDigitsInARow                # Property 6
-    @isPrimeNumber                           # Property 7
-    @containsAtLeast2EvenDigitsInARow        # Property 8
-    @isTheProductOfAllOddDigitsASquareNumber # Property 9
-  ]
-
   constructor: (@number) ->
     @digits    = @number.toString(10).split('').map(Number)
     @digitsOdd = @digits.filter (digit) -> digit %% 2 is 1
@@ -23,9 +10,22 @@ class MagicNumberValidator
     @productDigits    = @digits.reduce ((product, digit) -> product * digit), 1
     @productDigitsOdd = @digitsOdd.reduce ((product, digit) -> product * digit), 1
 
+    @properties = [
+      @hasOneOfTheDigitsThatIsSumOfTheOthers   # Property 0
+      @isDecreasingSequence                    # Property 1
+      @hasAtLeast2OddDigits                    # Property 2
+      @areAllDigitsDifferent                   # Property 3
+      @isThe4thDigitEven                       # Property 4
+      @productOfAllDigitsIsNotMultipleOf5      # Property 5
+      @contains3OddDigitsInARow                # Property 6
+      @isPrimeNumber                           # Property 7
+      @containsAtLeast2EvenDigitsInARow        # Property 8
+      @isTheProductOfAllOddDigitsASquareNumber # Property 9
+    ]
+
   isValid: =>
     for digit in [0...9]
-      return false if @properties()[digit]() isnt @containsDigit(digit)
+      return false if @properties[digit]() isnt @containsDigit(digit)
     true
 
   containsDigit: (digit) => digit in @digits
@@ -85,5 +85,3 @@ exports.findSmallest = ->
   for number in [0..40048]
     if new MagicNumberValidator(number).isValid()
       return console.log "The magic number is #{number}!"
-
-exports.findSmallest()
