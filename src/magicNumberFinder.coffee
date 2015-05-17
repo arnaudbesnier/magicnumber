@@ -9,9 +9,9 @@ class MagicNumberValidator
     @areAllDigitsDifferent                   # Property 3
     @isThe4thDigitEven                       # Property 4
     @productOfAllDigitsIsNotMultipleOf5      # Property 5
-    @contains3OddDigitInARow                 # Property 6
+    @contains3OddDigitsInARow                # Property 6
     @isPrimeNumber                           # Property 7
-    @hasAtLeast2EvenDigitsInARow             # Property 8
+    @containsAtLeast2EvenDigitsInARow        # Property 8
     @isTheProductOfAllOddDigitsASquareNumber # Property 9
   ]
 
@@ -52,31 +52,25 @@ class MagicNumberValidator
 
   productOfAllDigitsIsNotMultipleOf5: => (@productDigits %% 5) isnt 0
 
-  contains3OddDigitInARow: =>
-    oddDigitsCount = 0
+  detectEvenOddDigitsRow: (lengthMin, moduloResult) =>
+    countDigits = 0
     for digit in @digits
-      if digit %% 2 is 1
-        oddDigitsCount++
-        return true if oddDigitsCount >= 3
+      if digit %% 2 is moduloResult
+        countDigits++
+        return true if countDigits >= lengthMin
       else
-        oddDigitsCount = 0
+        countDigits = 0
     false
+
+  contains3OddDigitsInARow: => @detectEvenOddDigitsRow(3, 1)
+
+  containsAtLeast2EvenDigitsInARow: => @detectEvenOddDigitsRow(2, 0)
 
   isPrimeNumber: =>
     return false if @number < 2
     for value in [2..@number]
       return false if @number %% value is 0
     true
-
-  hasAtLeast2EvenDigitsInARow: =>
-    evenDigitsCount = 0
-    for digit in @digits
-      if digit %% 2 is 0
-        evenDigitsCount++
-        return true if evenDigitsCount >= 2
-      else
-        evenDigitsCount = 0
-    false
 
   isTheProductOfAllOddDigitsASquareNumber: =>
     return false if @digitsOdd.length is 0
