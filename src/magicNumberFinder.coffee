@@ -1,6 +1,19 @@
 _ = require 'underscore'
 
-class MagicNumberFinder
+class MagicNumberValidator
+
+  properties: => [
+    @hasOneOfTheDigitsThatIsSumOfTheOthers
+    @isDecreasingSequence
+    @hasAtLeast2OddDigits
+    @areAllDigitsDifferent
+    @isThe4thDigitEven
+    @productOfAllDigitsIsNotMultipleOf5
+    @contains3OddDigitInARow
+    @isPrimeNumber
+    @hasAtLeast2EvenDigitsInARow
+    @isTheProductOfAllOddDigitsASquareNumber
+  ]
 
   constructor: (@number) ->
     @digits               = @number.toString(10).split('').map(Number)
@@ -15,28 +28,18 @@ class MagicNumberFinder
       @digitsOddMultiplication = 0
 
   isValid: =>
-    return false if @checkProperty0() isnt @containsDigit(0)
-    return false if @checkProperty1() isnt @containsDigit(1)
-    return false if @checkProperty2() isnt @containsDigit(2)
-    return false if @checkProperty3() isnt @containsDigit(3)
-    return false if @checkProperty4() isnt @containsDigit(4)
-    return false if @checkProperty5() isnt @containsDigit(5)
-    return false if @checkProperty6() isnt @containsDigit(6)
-    return false if @checkProperty7() isnt @containsDigit(7)
-    return false if @checkProperty8() isnt @containsDigit(8)
-    return false if @checkProperty9() isnt @containsDigit(9)
+    for digit in [0...9]
+      return false if @properties()[digit]() isnt @containsDigit(digit)
     true
 
   containsDigit: (digit) => digit in @digits
 
-  # NOTICE: One of the digits is the sum of the others
-  checkProperty0: =>
+  hasOneOfTheDigitsThatIsSumOfTheOthers: =>
     for digit in @digits
       return true if digit is (@digitsSum - digit)
     false
 
-  # NOTICE: The digits form a decreasing sequence
-  checkProperty1: =>
+  isDecreasingSequence: =>
     digitCurrent = 10
     for digit in @digits
       if digitCurrent > digit
@@ -45,20 +48,15 @@ class MagicNumberFinder
         return false
     true
 
-  # NOTICE: It has at least 2 odd digits
-  checkProperty2: => @digitsOdd.length >= 2
+  hasAtLeast2OddDigits: => @digitsOdd.length >= 2
 
-  # NOTICE: All digits are different
-  checkProperty3: => @digits.length is _.uniq(@digits).length
+  areAllDigitsDifferent: => @digits.length is _.uniq(@digits).length
 
-  # NOTICE: The 4th digit is even
-  checkProperty4: => ((@digits[3] or 1) %% 2) is 0
+  isThe4thDigitEven: => ((@digits[3] or 1) %% 2) is 0
 
-  # NOTICE: The product of all digits is not a multiple of 5
-  checkProperty5: => (@digitsMultiplication %% 5) isnt 0
+  productOfAllDigitsIsNotMultipleOf5: => (@digitsMultiplication %% 5) isnt 0
 
-  # NOTICE: The number contains 3 odd digits in a row
-  checkProperty6: =>
+  contains3OddDigitInARow: =>
     oddDigitsCount = 0
     for digit in @digits
       if digit %% 2 is 1
@@ -68,15 +66,13 @@ class MagicNumberFinder
         oddDigitsCount = 0
     false
 
-  # NOTICE: It is a prime number
-  checkProperty7: =>
+  isPrimeNumber: =>
     return false if @number < 2
     for value in [2..@number]
       return false if @number %% value is 0
     true
 
-  # NOTICE: It has at least 2 even digits in a row
-  checkProperty8: =>
+  hasAtLeast2EvenDigitsInARow: =>
     evenDigitsCount = 0
     for digit in @digits
       if digit %% 2 is 0
@@ -86,25 +82,16 @@ class MagicNumberFinder
         evenDigitsCount = 0
     false
 
-  # NOTICE: The product of all odd digits is a square number
-  checkProperty9: =>
+  isTheProductOfAllOddDigitsASquareNumber: =>
     return false if @digitsOdd.length is 0
     Math.sqrt(@digitsOddMultiplication) is Math.abs(Math.sqrt(@digitsOddMultiplication))
 
 exports.create = (number) ->
-  new MagicNumberFinder number
+  new MagicNumberValidator number
 
 exports.findSmaller = ->
+  for number in [0..40048]
+    if new MagicNumberValidator(number).isValid()
+      return console.log "The magic number is #{number}!"
 
-  # validator = new MagicNumberFinder 40048
-  # if validator.isValid()
-  #   console.log "The magic number is 40048!"
-
-  for number in [0..10000]
-    validator = new MagicNumberFinder number
-
-    if validator.isValid()
-      console.log "The magic number is #{number}!"
-      return
-
-#exports.findSmaller()
+exports.findSmaller()
