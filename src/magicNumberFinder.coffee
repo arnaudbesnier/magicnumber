@@ -81,9 +81,9 @@ class MagicNumberValidator
 
 exports.create = (number) -> new MagicNumberValidator number
 
-exports.findSmaller = ->
+exports.findSmallest = ->
   for number in [0..40048]
     if new MagicNumberValidator(number).isValid()
       return console.log "The magic number is #{number}!"
 
-exports.findSmaller()
+exports.findSmallest()
