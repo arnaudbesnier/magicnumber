@@ -16,16 +16,12 @@ class MagicNumberValidator
   ]
 
   constructor: (@number) ->
-    @digits               = @number.toString(10).split('').map(Number)
-    @digitsSum            = @digits.reduce (sum, digit)   -> sum + digit
-    @digitsMultiplication = @digits.reduce ((multi, digit) -> multi * digit), 1
-    @digitsOdd            = @digits.filter (digit) -> digit %% 2 is 1
+    @digits    = @number.toString(10).split('').map(Number)
+    @digitsOdd = @digits.filter (digit) -> digit %% 2 is 1
 
-    if @digitOdd?
-      @digitsOddMultiplication = @digitsOdd.reduce ((multi, digit) -> multi * digit), 1
-    else
-      @digitOdd = []
-      @digitsOddMultiplication = 0
+    @sumDigits        = @digits.reduce (sum, digit) -> sum + digit
+    @productDigits    = @digits.reduce ((product, digit) -> product * digit), 1
+    @productDigitsOdd = @digitsOdd.reduce ((product, digit) -> product * digit), 1
 
   isValid: =>
     for digit in [0...9]
@@ -36,7 +32,7 @@ class MagicNumberValidator
 
   hasOneOfTheDigitsThatIsSumOfTheOthers: =>
     for digit in @digits
-      return true if digit is (@digitsSum - digit)
+      return true if digit is (@sumDigits - digit)
     false
 
   isDecreasingSequence: =>
@@ -54,7 +50,7 @@ class MagicNumberValidator
 
   isThe4thDigitEven: => ((@digits[3] or 1) %% 2) is 0
 
-  productOfAllDigitsIsNotMultipleOf5: => (@digitsMultiplication %% 5) isnt 0
+  productOfAllDigitsIsNotMultipleOf5: => (@productDigits %% 5) isnt 0
 
   contains3OddDigitInARow: =>
     oddDigitsCount = 0
@@ -84,7 +80,7 @@ class MagicNumberValidator
 
   isTheProductOfAllOddDigitsASquareNumber: =>
     return false if @digitsOdd.length is 0
-    Math.sqrt(@digitsOddMultiplication) is Math.abs(Math.sqrt(@digitsOddMultiplication))
+    Math.sqrt(@productDigitsOdd) is Math.abs(Math.sqrt(@productDigitsOdd))
 
 exports.create = (number) ->
   new MagicNumberValidator number
